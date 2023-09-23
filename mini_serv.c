@@ -11,6 +11,7 @@
 #include <signal.h>
 
 #define BUFFER_SIZE 50000
+#define MAX_CLIENTS 128
 
 char msg[40];
 
@@ -73,7 +74,7 @@ int handler(int sig)
 void close_clients(int *id)
 {
     int i = 0;
-    while (i < 5500)
+    while (i < MAX_CLIENTS)
     {
         if (id[i] > 0)
         {
@@ -109,7 +110,7 @@ int find_max_fd(int max_fd, int* id, int sockfd)
 {
     int i = 0;
     max_fd = sockfd;
-    while (i < 5500)
+    while (i < MAX_CLIENTS)
     {
         if (max_fd < id[i])
             max_fd = id[i];
@@ -121,7 +122,7 @@ int find_max_fd(int max_fd, int* id, int sockfd)
 void reset_client(int fd, int *id)
 {
     int i = 0;
-    while (i < 5500)
+    while (i < MAX_CLIENTS)
     {
         if (fd == id[i])
         {
@@ -135,7 +136,7 @@ void reset_client(int fd, int *id)
 int find_client(int fd, int *id)
 {
     int i = 0;
-    while (i < 5500)
+    while (i < MAX_CLIENTS)
     {
         if (fd == id[i])
             return (i);
@@ -184,7 +185,7 @@ int main(int argc, char **argv)
     fd_set read_fd, write_fd, curr_fd;
     FD_ZERO(&curr_fd);
     FD_SET(sockfd, &curr_fd);
-    int id[5500];
+    int id[MAX_CLIENTS];
     memset(id,0,sizeof(id));
     int max_fd = sockfd;
     int n_id = 0;
@@ -194,13 +195,13 @@ int main(int argc, char **argv)
         read_fd = write_fd = curr_fd;
         if (handler(0) == 42)
         {
-            (void)fatal("handler close server\n");
-            break;
+            (void)fatal("shutdown server\n");
+            break ;
         }
         if (select(max_fd + 1, &read_fd, &write_fd, 0, 0) < 0)
         {
             (void)fatal("select failed\n");
-            continue;
+            continue ;
         }
         int fd = 0;
         while (fd <= max_fd)
