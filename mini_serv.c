@@ -15,53 +15,6 @@
 
 char msg[40];
 
-int extract_message(char **buf, char **mesg)
-{
-	char	*newbuf;
-	int	i;
-
-	*mesg = 0;
-	if (*buf == 0)
-		return (0);
-	i = 0;
-	while ((*buf)[i])
-	{
-		if ((*buf)[i] == '\n')
-		{
-			newbuf = calloc(1, sizeof(*newbuf) * (strlen(*buf + i + 1) + 1));
-			if (newbuf == 0)
-				return (-1);
-			strcpy(newbuf, *buf + i + 1);
-			*mesg = *buf;
-			(*mesg)[i + 1] = 0;
-			*buf = newbuf;
-			return (1);
-		}
-		i++;
-	}
-	return (0);
-}
-
-char *str_join(char *buf, char *add)
-{
-	char	*newbuf;
-	int		len;
-
-	if (buf == 0)
-		len = 0;
-	else
-		len = strlen(buf);
-	newbuf = malloc(sizeof(*newbuf) * (len + strlen(add) + 1));
-	if (newbuf == 0)
-		return (0);
-	newbuf[0] = 0;
-	if (buf != 0)
-		strcat(newbuf, buf);
-	free(buf);
-	strcat(newbuf, add);
-	return (newbuf);
-}
-
 int handler(int sig)
 {
     static int ex;
@@ -213,7 +166,7 @@ int main(int argc, char **argv)
                     struct sockaddr_in client;
                     socklen_t len = sizeof(client);
                     int client_fd = accept(fd, (struct sockaddr *)&client, &len);
-                    printf("client accepted [%i]\n", n_id);
+                    //printf("client accepted [%i]\n", n_id);
                     if (client_fd >= 0)
                     {
                         FD_SET(client_fd, &curr_fd);
