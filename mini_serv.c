@@ -214,31 +214,6 @@ int main(int argc, char** argv)
                             i++;
                         }
                     }
-                    /*for (int i = 0, j = 0; i < ret; i++, j++)
-                        {
-                            str[j] = buf[i];
-                            if (str[j] == '\n')
-                            {
-                                str[j + 1] = '\0';
-                                if (currmsg[fd])
-                                    sprintf(msg, "%s", str);
-                                else
-                                    sprintf(msg, "client %d: %s", id[fd], str);
-                                currmsg[fd] = 0;
-                                sendAll(fd);
-                                j = -1;
-                            }
-                            else if (i == (ret - 1))
-                            {
-                                str[j + 1] = '\0';
-                                if (currmsg[fd])
-                                    sprintf(msg, "%s", str);
-                                else
-                                    sprintf(msg, "client %d: %s", id[fd], str);
-                                currmsg[fd] = 1;
-                                sendAll(fd);
-                                break;
-                            }*/
                 }
             }
             fd++;
