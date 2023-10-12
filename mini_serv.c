@@ -213,6 +213,7 @@ int main(int argc, char** argv)
 									sprintf(msg, "client %d: %s", get_id(fd, id), buff);
 								id_f[get_id(fd, id)] = 0;
 								send_all(fd, id, write_fd);
+								j = -1;
 							}
 							else if (i == ret - 1)
 							{
