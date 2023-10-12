@@ -10,8 +10,9 @@
 #include <signal.h>
 #include <arpa/inet.h>
 
-int main()
+int main(int argc, char** argv)
 {
+
     char buffer[4096];
     int sockfd = socket(AF_INET, SOCK_STREAM, 0);
     if (sockfd == -1)
@@ -34,7 +35,15 @@ int main()
     // Send a message to the server
     char msg[42];
     sprintf(msg, "Hello, Server!\nHallo\n\n\n");
-    int bytes = send(sockfd, msg, strlen(msg), 0);
+    int i = 0;
+    int bytes = 0;
+    while (i++ < 100)
+    {
+        bytes = send(sockfd, msg, strlen(msg), 0);
+        sleep(1);
+        if (bytes < 0)
+            break ;
+    }
     printf("Message sent: %s\nbytes = %i\n", msg, bytes);
     // Close the socket and exit
     close(sockfd);
