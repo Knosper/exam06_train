@@ -10,7 +10,7 @@
 #include <signal.h>
 #include <fcntl.h>
 
-#define MAX_CLIENTS 128
+#define MAX_CLIENTS 3001
 #define BUFFER_SIZE 3
 
 char msg[5500];
